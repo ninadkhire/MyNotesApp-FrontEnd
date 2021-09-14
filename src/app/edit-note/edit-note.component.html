@@ -1,0 +1,27 @@
+<div class="col-md-6 offset-md-3">
+    <h3 class="mt-2">Edit Note</h3>
+    <form (ngSubmit)="onSubmit()">
+
+        <div class="form-group mt-2">
+            <label for="title">Title</label>
+            <input type="text"
+                class="form-control"
+                id="title"
+                [(ngModel)]="note.title"
+                name="title">
+        </div>
+
+        <div class="form-group mt-2">
+            <label for="note">Note</label>
+            <textarea name="note"
+                id="note"
+                cols="30"
+                rows="10"
+                class="form-control"
+                [(ngModel)]="note.note"></textarea>
+        </div>
+
+        <button class="btn btn-success mt-2 mr-3" type="submit">Update</button>
+        
+    </form>
+</div>
