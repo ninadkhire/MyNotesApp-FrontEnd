@@ -1,6 +1,6 @@
 <div class="col-md-6 offset-md-3">
     <h3 class="mt-2">Edit Note</h3>
-    <form (ngSubmit)="onSubmit()">
+    <form>
 
         <div class="form-group mt-2">
             <label for="title">Title</label>
@@ -21,7 +21,8 @@
                 [(ngModel)]="note.note"></textarea>
         </div>
 
-        <button class="btn btn-success mt-2 mr-3" type="submit">Update</button>
+        <button class="btn btn-success mt-2 me-2" (click)="onUpdateClicked()">Update</button>
+        <button class="btn btn-danger mt-2 me-2" (click)="onDeleteClicked()">Delete</button>
         
     </form>
 </div>

@@ -24,10 +24,18 @@ export class EditNoteComponent implements OnInit {
     }, error => console.log(error));
   }
 
-  onSubmit(){
+  onUpdateClicked(){
     this.appService.updateNote(this.id, this.note).subscribe(data => {
       this.gotoNotesList();
     }, error => console.log(error));
+  }
+
+  onDeleteClicked(){
+    if(confirm("Are you sure you want to delete this note? It cannot be undone.")){
+      this.appService.deleteNote(this.id).subscribe(data => {
+        this.gotoNotesList();
+      }, error => console.log(error));
+    }
   }
 
   gotoNotesList(){
