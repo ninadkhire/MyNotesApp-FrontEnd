@@ -1,37 +1,43 @@
-<div class="col-md-6 offset-md-3">
-    <h3 class="mt-2">Create New Note</h3>
-    <form (ngSubmit)="onSubmit()">
-
-        <div class="form-group mt-2">
-            <label for="title">Title</label>
-            <input type="text"
-                class="form-control"
-                id="title"
-                [(ngModel)]="note.title"
-                name="title">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="text-center">
+                <h3 class="mt-2">Create New Note</h3>
+            </div>
+            <form (ngSubmit)="onSubmit()">
+        
+                <div class="form-group mt-2">
+                    <label for="title">Title</label>
+                    <input type="text"
+                        class="form-control"
+                        id="title"
+                        [(ngModel)]="note.title"
+                        name="title">
+                </div>
+        
+                <div class="form-group mt-2">
+                    <label for="note">Note</label>
+                    <textarea name="note"
+                        id="note"
+                        cols="30"
+                        rows="10"
+                        class="form-control"
+                        [(ngModel)]="note.note"></textarea>
+                </div>
+        
+                <div class="form-group mt-2" hidden=true>
+                    <label for="email">Email</label>
+                    <input type="text"
+                        class="form-control"
+                        id="email"
+                        [(ngModel)]="note.userEmail"
+                        name="email"
+                        value="ninadkhire@gmail.com">
+                </div>
+        
+                <button class="btn btn-success mt-3" type="submit">Create</button>
+        
+            </form>
         </div>
-
-        <div class="form-group mt-2">
-            <label for="note">Note</label>
-            <textarea name="note"
-                id="note"
-                cols="30"
-                rows="10"
-                class="form-control"
-                [(ngModel)]="note.note"></textarea>
-        </div>
-
-        <div class="form-group mt-2" hidden=true>
-            <label for="email">Email</label>
-            <input type="text"
-                class="form-control"
-                id="email"
-                [(ngModel)]="note.userEmail"
-                name="email"
-                value="ninadkhire@gmail.com">
-        </div>
-
-        <button class="btn btn-success mt-3" type="submit">Create</button>
-
-    </form>
+    </div>
 </div>

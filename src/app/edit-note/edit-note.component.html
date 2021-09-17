@@ -1,28 +1,34 @@
-<div class="col-md-6 offset-md-3">
-    <h3 class="mt-2">Edit Note</h3>
-    <form>
-
-        <div class="form-group mt-2">
-            <label for="title">Title</label>
-            <input type="text"
-                class="form-control"
-                id="title"
-                [(ngModel)]="note.title"
-                name="title">
-        </div>
-
-        <div class="form-group mt-2">
-            <label for="note">Note</label>
-            <textarea name="note"
-                id="note"
-                cols="30"
-                rows="10"
-                class="form-control"
-                [(ngModel)]="note.note"></textarea>
-        </div>
-
-        <button class="btn btn-success mt-2 me-2" (click)="onUpdateClicked()">Update</button>
-        <button class="btn btn-danger mt-2 me-2" (click)="onDeleteClicked()">Delete</button>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="text-center">
+                <h3 class="mt-2">Edit Note</h3>
+            </div>
+            <form>
         
-    </form>
+                <div class="form-group mt-2">
+                    <label for="title">Title</label>
+                    <input type="text"
+                        class="form-control"
+                        id="title"
+                        [(ngModel)]="note.title"
+                        name="title">
+                </div>
+        
+                <div class="form-group mt-2">
+                    <label for="note">Note</label>
+                    <textarea name="note"
+                        id="note"
+                        cols="30"
+                        rows="10"
+                        class="form-control"
+                        [(ngModel)]="note.note"></textarea>
+                </div>
+        
+                <button class="btn btn-success mt-2 me-2" (click)="onUpdateClicked()">Update</button>
+                <button class="btn btn-danger mt-2 me-2" (click)="onDeleteClicked()">Delete</button>
+                
+            </form>
+        </div>
+    </div>
 </div>

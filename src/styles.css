@@ -2,3 +2,7 @@
 p {
     white-space: pre-wrap;
 }
+
+.btn-inline-text {
+    vertical-align: middle;
+}

@@ -10,6 +10,7 @@ import { NotesListComponent } from './notes-list/notes-list.component';
 import { EditNoteComponent } from './edit-note/edit-note.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { LoginComponent } from './login/login.component';
     NotesListComponent,
     EditNoteComponent,
     PageNotFoundComponent,
-    LoginComponent
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
