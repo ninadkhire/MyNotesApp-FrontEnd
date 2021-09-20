@@ -6,14 +6,24 @@
                 <h5 class="text-muted">Create a new account</h5>
             </div>
 
-            <form>
+            <form (ngSubmit)="f.form.valid && signupClicked()" #f="ngForm">
                 <div class="form-group mt-2">
                     <label for="username">Username</label>
                     <input
                         type="text"
                         class="form-control"
                         id="username"
-                        name="username">
+                        name="username"
+                        
+                        #username="ngModel"
+                        [(ngModel)]="credentials.username"
+						[ngClass]="{'is-invalid': f.submitted && username.invalid}"
+						required
+						minLength = "3">
+                    <div *ngIf="f.submitted && username.invalid" class="invalid-feedback">
+                        <div *ngIf="username.errors.required">>> required</div>
+                        <div *ngIf="username.errors.minlength">>> Must be atleast 3 characters</div>
+                    </div>
                 </div>
 
                 <div class="form-group mt-2">
@@ -22,7 +32,17 @@
                         type="email"
                         class="form-control"
                         id="email"
-                        name="email">
+                        name="email"
+                        
+                        #email="ngModel"
+                        [(ngModel)]="credentials.email"
+						[ngClass]="{'is-invalid': f.submitted && email.invalid}"
+						required
+                        email>
+                    <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                        <div *ngIf="email.errors.required">>> required</div>
+                        <div *ngIf="email.errors.email">>> must be a valid email address</div>
+                    </div>
                 </div>
 
                 <div class="form-group mt-2">
@@ -31,10 +51,20 @@
                         type="password"
                         class="form-control"
                         id="password"
-                        name="password">
+                        name="password"
+                        
+						#password="ngModel"
+                        [(ngModel)]="credentials.password"
+						[ngClass]="{'is-invalid': f.submitted && password.invalid}"
+						required
+						minlength="6">
+                    <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+                        <div *ngIf="password.errors.required">>> required</div>
+                        <div *ngIf="password.errors.minlength">>> must be at least 6 characters</div>
+                    </div>
                 </div>
 
-                <div class="form-group mt-2">
+                <div class="form-group mt-2" hidden>
                     <label for="password">Retype Password</label>
                     <input
                         type="password"

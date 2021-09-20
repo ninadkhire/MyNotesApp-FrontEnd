@@ -15,6 +15,9 @@ export class LoginComponent implements OnInit {
 
   error = false;
 
+  //for form validation
+  form: any = {};
+
   constructor(private appService: AppService, private httpClient: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
@@ -22,8 +25,11 @@ export class LoginComponent implements OnInit {
 
   login(){
     try{
+      console.log("username="+this.form.username);
+      console.log("password="+this.form.password);
+
       this.appService.authenticate(this.credentials, ()=>{
-        this.router.navigateByUrl('/');
+        //
       });
     } catch(e){
       this.error = true;

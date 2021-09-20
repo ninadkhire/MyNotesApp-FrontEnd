@@ -4,6 +4,11 @@ import { Observable } from 'rxjs';
 
 import { Note } from './note';
 import { Credential } from './credential';
+import { Router } from '@angular/router';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +17,15 @@ export class AppService {
 
   private baseUrl = "http://localhost:8080/api/notes";
 
+  private apiUrl = "http://localhost:8080/api";
+
   private authenticated = false;
 
-  constructor(private httpClient: HttpClient) { }
+  private username = "Not logged in";
+
+  private credentials: any;
+
+  constructor(private httpClient: HttpClient, private router: Router) { }
 
   isUserAuthenticated() : boolean {
     return this.authenticated;
@@ -25,33 +36,61 @@ export class AppService {
       authorization: 'Basic ' + btoa(credentials.username+':'+credentials.password)
     } : {});
 
-    this.httpClient.get(`${this.baseUrl}`, {headers: headers}).subscribe((response: any) => {
+    this.httpClient.post(`${this.baseUrl}`, {headers: headers}, httpOptions).subscribe((response: any) => {
       if(response['name']){
         this.authenticated = true;
+
+        this.credentials = credentials;
+        this.username = credentials.username;
+
+        this.router.navigateByUrl('/');
       } else {
         this.authenticated = false;
+
+        alert("Authentication failed");
       }
+      console.log("Authenticated : "+this.authenticated);
       return callback && callback();
     });
   }
 
   getNotesList(): Observable<Note[]> {
+    const headers = new HttpHeaders(this.credentials ? {
+      authorization: 'Basic ' + btoa(this.credentials.username+':'+this.credentials.password)
+    } : {});
+
     return this.httpClient.get<Note[]>(`${this.baseUrl}`);
   }
 
   createNote(note: Note): Observable<Object> {
+    const headers = new HttpHeaders(this.credentials ? {
+      authorization: 'Basic ' + btoa(this.credentials.username+':'+this.credentials.password)
+    } : {});
+
     return this.httpClient.post(`${this.baseUrl}`, note);
   }
 
   getNoteById(id: number): Observable<Note> {
+    const headers = new HttpHeaders(this.credentials ? {
+      authorization: 'Basic ' + btoa(this.credentials.username+':'+this.credentials.password)
+    } : {});
+
     return this.httpClient.get<Note>(`${this.baseUrl}/${id}`);
   }
 
   updateNote(id: number, note: Note): Observable<Object> {
+    const headers = new HttpHeaders(this.credentials ? {
+      authorization: 'Basic ' + btoa(this.credentials.username+':'+this.credentials.password)
+    } : {});
+
     return this.httpClient.put(`${this.baseUrl}/${id}`, note);
   }
 
   deleteNote(id: number): Observable<Object> {
+    const headers = new HttpHeaders(this.credentials ? {
+      authorization: 'Basic ' + btoa(this.credentials.username+':'+this.credentials.password)
+    } : {});
+
     return this.httpClient.delete(`${this.baseUrl}/${id}`);
   }
 }

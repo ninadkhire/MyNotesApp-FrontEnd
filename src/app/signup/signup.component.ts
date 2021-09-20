@@ -8,6 +8,10 @@ import { Router } from '@angular/router';
 })
 export class SignupComponent implements OnInit {
 
+  form: any = {};
+
+  credentials = {username: '', email: '', password: ''};
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {
