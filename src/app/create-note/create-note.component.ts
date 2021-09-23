@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppService } from '../app.service';
+
 import { Note } from '../note';
+import { NoteService } from '../_services/note.service';
 
 @Component({
   selector: 'app-create-note',
@@ -12,15 +13,15 @@ export class CreateNoteComponent implements OnInit {
 
   note: Note = new Note();
 
-  constructor(private appService: AppService, private router: Router) { }
+  constructor(private noteService: NoteService, private router: Router) { }
 
   ngOnInit(): void {
-    this.note.userEmail="ninadkhire@gmail.com";
+    
   }
 
   saveNote(){
-    this.appService.createNote(this.note).subscribe(data => {
-      console.log("Note added successfully");
+    this.noteService.createNote(this.note).subscribe(data => {
+      console.log("Note added successfully. Data = "+data.toString());
       this.gotoNotesList();
     }, error => {
       console.log("Error while adding note to db "+error);

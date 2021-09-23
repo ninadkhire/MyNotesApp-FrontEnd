@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Note } from './note';
-import { Credential } from './credential';
+import { Note } from '../note';
+import { Credential } from '../credential';
 import { Router } from '@angular/router';
 
 const httpOptions = {
@@ -55,42 +55,22 @@ export class AppService {
   }
 
   getNotesList(): Observable<Note[]> {
-    const headers = new HttpHeaders(this.credentials ? {
-      authorization: 'Basic ' + btoa(this.credentials.username+':'+this.credentials.password)
-    } : {});
-
     return this.httpClient.get<Note[]>(`${this.baseUrl}`);
   }
 
   createNote(note: Note): Observable<Object> {
-    const headers = new HttpHeaders(this.credentials ? {
-      authorization: 'Basic ' + btoa(this.credentials.username+':'+this.credentials.password)
-    } : {});
-
     return this.httpClient.post(`${this.baseUrl}`, note);
   }
 
   getNoteById(id: number): Observable<Note> {
-    const headers = new HttpHeaders(this.credentials ? {
-      authorization: 'Basic ' + btoa(this.credentials.username+':'+this.credentials.password)
-    } : {});
-
     return this.httpClient.get<Note>(`${this.baseUrl}/${id}`);
   }
 
   updateNote(id: number, note: Note): Observable<Object> {
-    const headers = new HttpHeaders(this.credentials ? {
-      authorization: 'Basic ' + btoa(this.credentials.username+':'+this.credentials.password)
-    } : {});
-
     return this.httpClient.put(`${this.baseUrl}/${id}`, note);
   }
 
   deleteNote(id: number): Observable<Object> {
-    const headers = new HttpHeaders(this.credentials ? {
-      authorization: 'Basic ' + btoa(this.credentials.username+':'+this.credentials.password)
-    } : {});
-
     return this.httpClient.delete(`${this.baseUrl}/${id}`);
   }
 }

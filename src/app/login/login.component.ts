@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppService } from '../app.service';
 import { Credential } from '../credential';
+import { AuthService } from '../_services/auth.service';
+import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -13,32 +14,48 @@ export class LoginComponent implements OnInit {
 
   credentials: Credential = {username: '', password: ''};
 
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: String[] = [];
+
   error = false;
 
-  //for form validation
-  form: any = {};
-
-  constructor(private appService: AppService, private httpClient: HttpClient, private router: Router) { }
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private httpClient: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
+    if (this.tokenStorage.getToken()) {
+      this.isLoggedIn = true;
+      this.roles = this.tokenStorage.getUser().roles;
+    }
   }
 
-  login(){
-    try{
-      console.log("username="+this.form.username);
-      console.log("password="+this.form.password);
+  login(): void{
+    const { username, password } = this.credentials;
 
-      this.appService.authenticate(this.credentials, ()=>{
-        //
-      });
-    } catch(e){
-      this.error = true;
-    }
-    return false;
+    this.authService.login(username, password).subscribe(
+      data=>{
+        this.tokenStorage.saveToken(data.accessToken);
+        this.tokenStorage.saveUser(data);
+
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.roles = this.tokenStorage.getUser().roles;
+        this.reloadPage();
+      },
+      err=>{
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
+      }
+    );
   }
 
   signupClicked(){
     this.router.navigate(['signup']);
+  }
+
+  reloadPage(): void {
+    window.location.reload();
   }
 
 }

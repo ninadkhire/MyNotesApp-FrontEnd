@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppService } from '../app.service';
 import { Note } from '../note';
+import { NoteService } from '../_services/note.service';
+import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-notes-list',
@@ -14,14 +15,14 @@ export class NotesListComponent implements OnInit {
 
   isEmpty = true;
 
-  constructor(private appService: AppService, private router: Router) { }
+  constructor(private tokenStorage: TokenStorageService, private noteService: NoteService, private router: Router) { }
 
   ngOnInit(): void {
     this.getNotes();
   }
 
   private getNotes(){
-    this.appService.getNotesList().subscribe(data => {
+    this.noteService.getNotesList().subscribe(data => {
       this.notes = data;
 
       if(this.notes.length > 0){
@@ -29,13 +30,14 @@ export class NotesListComponent implements OnInit {
       } else {
         this.isEmpty = true;
       }
-      console.log(this.notes.length);
+      console.log("Notes Length = "+this.notes.length);
     });
   }
 
   deleteNote(id: number, i: number){
     if(confirm("Are you sure you want to delete the note \""+ this.notes[i].title +"\"?")){
-      this.appService.deleteNote(id).subscribe(data => {
+      this.noteService.deleteNote(id).subscribe(data => {
+        console.log("Note deleted. Data = "+data.toString());
         this.getNotes();
       });
     }

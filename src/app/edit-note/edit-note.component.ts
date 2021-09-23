@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppService } from '../app.service';
 import { Note } from '../note';
+import { NoteService } from '../_services/note.service';
 
 @Component({
   selector: 'app-edit-note',
@@ -14,25 +14,27 @@ export class EditNoteComponent implements OnInit {
 
   id: number;
 
-  constructor(private appService: AppService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private noteService: NoteService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
 
-    this.appService.getNoteById(this.id).subscribe(data => {
+    this.noteService.getNoteById(this.id).subscribe(data => {
       this.note = data;
     }, error => console.log(error));
   }
 
   onUpdateClicked(){
-    this.appService.updateNote(this.id, this.note).subscribe(data => {
+    this.noteService.updateNote(this.note).subscribe(data => {
+      console.log("Note updated. Data = "+data.toString());
       this.gotoNotesList();
     }, error => console.log(error));
   }
 
   onDeleteClicked(){
     if(confirm("Are you sure you want to delete this note? It cannot be undone.")){
-      this.appService.deleteNote(this.id).subscribe(data => {
+      this.noteService.deleteNote(this.id).subscribe(data => {
+        console.log("Note deleted. Data = "+data.toString());
         this.gotoNotesList();
       }, error => console.log(error));
     }
