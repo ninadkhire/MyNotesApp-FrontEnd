@@ -1,15 +1,29 @@
-<div class="col-md-6 offset-md-3 mt-2" *ngIf="isEmpty">
-  <p style="font-size: 2em; text-align: center;">The list is empty</p>
-  <div class="text-center">
-    <button class="btn btn-success" style="cursor: pointer;" (click)="gotoCreateNewNote()">Create New Note</button>
-  </div>
-</div>
-<div class="card col-md-6 offset-md-3 mt-2"
-    *ngFor="let note of notes; index as i">
-  <div class="card-body">
-    <h5 class="card-title">{{note.title}}</h5>
-    <p class="card-text">{{note.note}}</p>
-    <a class="card-link" style="cursor: pointer;" (click)="editNote(note.id)">Edit</a>
-    <a class="card-link" style="cursor: pointer;" (click)="deleteNote(note.id, i)">Delete</a>
+<div class="container">
+  <div class="row justify-content-center">
+      <div *ngIf="tokenStorage.isLoggedIn()">
+        <div class="col-md-6 offset-md-3 mt-2" *ngIf="isEmpty">
+          <p style="font-size: 2em; text-align: center;">The list is empty</p>
+          <div class="text-center">
+            <button class="btn btn-success" style="cursor: pointer;" (click)="gotoCreateNewNote()">Create New Note</button>
+          </div>
+        </div>
+        <div class="card col-md-6 offset-md-3 mt-2"
+            *ngFor="let note of notes; index as i">
+          <div class="card-body">
+            <h5 class="card-title">{{note.title}}</h5>
+            <p class="card-text">{{note.note}}</p>
+            <a class="card-link" style="cursor: pointer;" (click)="editNote(note.id)">Edit</a>
+            <a class="card-link" style="cursor: pointer;" (click)="deleteNote(note.id, i)">Delete</a>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!tokenStorage.isLoggedIn()">
+            <div class="col-md-6 offset-md-3 mt-2">
+              <p style="font-size: 2em; text-align: center;">You are not logged in!</p>
+              <div class="text-center">
+                <button class="btn btn-success" style="cursor: pointer;" (click)="gotoLogin()">Login</button>
+              </div>
+            </div>
+      </div>
   </div>
 </div>

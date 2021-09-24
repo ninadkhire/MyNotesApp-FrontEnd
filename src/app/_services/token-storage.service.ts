@@ -8,6 +8,12 @@ const USER_KEY = "auth-user";
 })
 export class TokenStorageService {
 
+  private roles: string[] = [];
+  private _isLoggedIn = false;
+  private showAdminBoard = false;
+  private showModeratorBoard = false;
+  private _username?: string;
+
   constructor() { }
 
   signOut(): void{
@@ -36,5 +42,32 @@ export class TokenStorageService {
     }
 
     return {};
+  }
+
+  updateLoginStatus(){
+    this._isLoggedIn = !!this.getToken();
+
+    if (this._isLoggedIn) {
+      const user = this.getUser();
+      this.roles = user.roles;
+
+      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
+
+      this._username = user.username;
+    }
+
+  }
+
+  isLoggedIn(){
+    this.updateLoginStatus();
+
+    return this._isLoggedIn;
+  }
+
+  getUsername(){
+    this.updateLoginStatus();
+
+    return this._username;
   }
 }

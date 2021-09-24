@@ -15,7 +15,7 @@ export class NotesListComponent implements OnInit {
 
   isEmpty = true;
 
-  constructor(private tokenStorage: TokenStorageService, private noteService: NoteService, private router: Router) { }
+  constructor(public tokenStorage: TokenStorageService, private noteService: NoteService, private router: Router) { }
 
   ngOnInit(): void {
     this.getNotes();
@@ -49,6 +49,10 @@ export class NotesListComponent implements OnInit {
 
   gotoCreateNewNote(){
     this.router.navigate(['/create-note']);
+  }
+
+  gotoLogin(){
+    this.router.navigate(['/login']);
   }
 
 }

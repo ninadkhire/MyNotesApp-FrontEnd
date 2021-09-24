@@ -1,19 +1,49 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div class="container">
     <a class="navbar-brand" routerLink="notes"><img src="assets/stickies.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">MyNotes</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <!--<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav mx-auto">
-        <a class="nav-link me-3" style="margin-left: -45px;" routerLink="create-note" routerLinkActive="active">Create New Note</a>
-        <a class="nav-link mx-1" routerLink="login" routerLinkActive="active">Login</a>
-        <a class="nav-link mx-1" routerLinkActive="active" (click)="logout()">Logout</a>
+      <div class="navbar-nav" [hidden]="!tokenStorage.isLoggedIn()">
+        <a class="nav-link mx-1" routerLink="create-note" routerLinkActive="active">Create New Note</a>
+        <a class="nav-link mx-1" routerLink="login" routerLinkActive="active" [hidden]="tokenStorage.isLoggedIn()">Login</a>
+        <a class="nav-link mx-1" routerLinkActive="active" [hidden]="!tokenStorage.isLoggedIn()" (click)="logout()" style="cursor: pointer;">Logout</a>
       </div>
-    </div>
-    <span id="loginStatus" class="navbar-text">
-      {{this.username}}
-    </span>
+    </div>-->
+    <form
+      class="container justify-content-start"
+      [hidden]="!tokenStorage.isLoggedIn()">
+      <button
+        class="btn btn-sm btn-outline-success mx-2"
+        type="button"
+        routerLink="create-note"
+        routerLinkActive="active">
+        Create new Note
+      </button>
+
+      <button
+        class="btn btn-sm btn-outline-success mx-2"
+        type="button"
+        routerLink="login"
+        routerLinkActive="active"
+        [hidden]="tokenStorage.isLoggedIn()">
+        Login
+      </button>
+
+      <button
+        class="btn btn-sm btn-outline-secondary mx-2"
+        type="button"
+        routerLinkActive="active"
+        [hidden]="!tokenStorage.isLoggedIn()"
+        (click)="logout()">
+        Logout
+      </button>
+
+      <span id="loginStatus" class="navbar-text btn-inline-text mx-2">
+        <img src="assets/person.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">{{tokenStorage.getUsername()}}
+      </span>
+    </form>
   </div>
 </nav>
 

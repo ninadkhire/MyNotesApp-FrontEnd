@@ -10,13 +10,13 @@ import { TokenStorageService } from './_services/token-storage.service';
 export class AppComponent implements OnInit {
   title = 'poc-my-notes-app-frontend';
 
-  private roles: string[] = [];
+  roles: string[] = [];
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
   username?: string;
 
-  constructor(private tokenStorage: TokenStorageService, private router: Router){}
+  constructor(public tokenStorage: TokenStorageService, private router: Router){}
   
   ngOnInit(): void{
     this.updateLoginStatus();
@@ -24,11 +24,12 @@ export class AppComponent implements OnInit {
 
   logout(): void{
     this.tokenStorage.signOut();
-    //window.location.reload();
 
     this.updateLoginStatus();
     
     console.log("Logout clicked. isLoggedIn: "+this.isLoggedIn);
+    
+    //window.location.reload();
 
     this.gotoHomePage();
   }
@@ -50,6 +51,6 @@ export class AppComponent implements OnInit {
   }
 
   gotoHomePage(){
-    this.router.navigate(['/notes']);
+    this.router.navigate(['']);
   }
 }
