@@ -84,11 +84,13 @@
                         Signup failed!<br />{{ errorMessage }}
                       </div>
                     <button
+                        id="signupButton"
                         class="btn btn-success"
                         (click)="signupClicked()">Signup</button>
                     <p class="mt-2">
                         <span class="btn-inline-text">Already have an account?</span>
                         <button
+                            id="loginInsteadButton"
                             class="btn btn-sm btn-primary ms-2"
                             (click)="loginClicked()">Login</button>
                     </p>

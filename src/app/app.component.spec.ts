@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'poc-my-notes-app-frontend'`, () => {
+  it(`should have as title 'MyNotes'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('poc-my-notes-app-frontend');
+    expect(app.title).toEqual('MyNotes');
   });
 
-  it('should render title', () => {
+  it(`should render 'MyNotes' app name in app title bar`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('poc-my-notes-app-frontend app is running!');
+    expect(compiled.querySelector('.navbar-brand')?.textContent).toContain('MyNotes');
   });
 });

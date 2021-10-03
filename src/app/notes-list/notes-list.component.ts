@@ -15,13 +15,13 @@ export class NotesListComponent implements OnInit {
 
   isEmpty = true;
 
-  constructor(public tokenStorage: TokenStorageService, private noteService: NoteService, private router: Router) { }
+  constructor(public tokenStorage: TokenStorageService, public noteService: NoteService, private router: Router) { }
 
   ngOnInit(): void {
     this.getNotes();
   }
 
-  private getNotes(){
+  getNotes(){
     this.noteService.getNotesList().subscribe(data => {
       this.notes = data;
 
@@ -30,6 +30,7 @@ export class NotesListComponent implements OnInit {
       } else {
         this.isEmpty = true;
       }
+      console.log("Notes = "+this.notes[1].id);
       console.log("Notes Length = "+this.notes.length);
     });
   }

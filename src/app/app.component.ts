@@ -8,7 +8,7 @@ import { TokenStorageService } from './_services/token-storage.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'poc-my-notes-app-frontend';
+  title = 'MyNotes';
 
   roles: string[] = [];
   isLoggedIn = false;
