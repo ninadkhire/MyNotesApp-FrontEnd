@@ -1,31 +1,55 @@
 <div class="container">
   <div class="row justify-content-center">
-      <div *ngIf="tokenStorage.isLoggedIn()">
-        <div class="col-md-6 offset-md-3 mt-2" *ngIf="isEmpty">
-          <p id="pListEmpty" style="font-size: 2em; text-align: center;">The list is empty</p>
-          <div class="text-center">
-            <button id="createNewNoteButton" class="btn btn-success" style="cursor: pointer;" (click)="gotoCreateNewNote()">Create New Note</button>
-          </div>
+    <div *ngIf="tokenStorage.isLoggedIn()">
+      <div class="col-md-6 offset-md-3 mt-2" *ngIf="isEmpty">
+        <p id="pListEmpty" style="font-size: 2em; text-align: center;">The list is empty</p>
+        <div class="text-center">
+          <button id="createNewNoteButton" class="btn btn-success" style="cursor: pointer;"
+            (click)="gotoCreateNewNote()">Create New Note</button>
         </div>
-        <div class="notesListContainer">
-          <div class="card col-md-6 offset-md-3 mt-2"
-            *ngFor="let note of notes; index as i">
+      </div>
+      <div class="notesListContainer">
+        <div class="card col-md-6 offset-md-3 mt-2" *ngFor="let note of notes; index as i">
           <div class="card-body">
             <h5 class="card-title">{{note.title}}</h5>
             <p class="card-text">{{note.note}}</p>
             <a class="card-link editLink" style="cursor: pointer;" (click)="editNote(note.id)">Edit</a>
-            <a class="card-link deleteLink" style="cursor: pointer;" (click)="deleteNote(note.id, i)">Delete</a>
-          </div>
-        </div>
-        </div>
-      </div>
-      <div *ngIf="!tokenStorage.isLoggedIn()">
-            <div class="col-md-6 offset-md-3 mt-2">
-              <p style="font-size: 2em; text-align: center;">You are not logged in!</p>
-              <div class="text-center">
-                <button class="btn btn-success" style="cursor: pointer;" (click)="gotoLogin()">Login</button>
+            <a class="card-link deleteLink" style="cursor: pointer;" [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="'#deleteModal'+i">Delete</a>
+
+            <!-- Delete Modal -->
+            <div class="modal fade" [id]="'deleteModal'+i" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+              aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Delete note?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Delete the note "{{notes[i].title}}"?
+                    <br>You will not be able to recover this note once you delete it.
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                      (click)="deleteNote(note.id, i)">Delete</button>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+
+          
+        </div>
       </div>
+    </div>
+    <div *ngIf="!tokenStorage.isLoggedIn()">
+      <div class="col-md-6 offset-md-3 mt-2">
+        <p style="font-size: 2em; text-align: center;">You are not logged in!</p>
+        <div class="text-center">
+          <button class="btn btn-success" style="cursor: pointer;" (click)="gotoLogin()">Login</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

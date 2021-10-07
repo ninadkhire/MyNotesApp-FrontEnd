@@ -4,6 +4,14 @@
             <div class="text-center">
                 <h3 class="mt-2">Edit Note</h3>
             </div>
+
+            <div
+                class="alert alert-danger text-center"
+                role="alert"
+                *ngIf="showCantDeactivateAlert">
+                Please save or discard the changes.
+            </div>
+
             <form>
         
                 <div class="form-group mt-2">
@@ -12,6 +20,7 @@
                         class="form-control"
                         id="title"
                         [(ngModel)]="note.title"
+                        (keyup)="onModified()"
                         name="title">
                 </div>
         
@@ -22,11 +31,86 @@
                         cols="30"
                         rows="10"
                         class="form-control"
-                        [(ngModel)]="note.note"></textarea>
+                        [(ngModel)]="note.note"
+                        (keyup)="onModified()"></textarea>
                 </div>
         
-                <button id="positiveSubmitButton" class="btn btn-success mt-2 me-2" (click)="onUpdateClicked()">Update</button>
-                <button class="btn btn-danger mt-2 me-2" (click)="onDeleteClicked()">Delete</button>
+                <button
+                    id="positiveSubmitButton"
+                    class="btn btn-success mt-2 me-2"
+                    data-bs-toggle="modal"
+                    data-bs-target="#updateModal"
+                    [disabled]="!isModified">Update</button>
+
+                <button
+                    class="btn btn-secondary mt-2 me-2"
+                    *ngIf="isModified"
+                    data-bs-toggle="modal"
+                    data-bs-target="#discardChangesModal">Discard changes</button>
+
+                <button
+                    class="btn btn-danger mt-2 me-0 float-end"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal">Delete</button>
+
+                <!-- Update Modal -->
+                <div class="modal fade" id="updateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Save the changes?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        Save the changes made to the note "{{note.title}}"?
+                        <br>You will not be able to undo these changes once they are saved.
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onUpdateClicked()">Save</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                <!-- Delete Modal -->
+                <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Delete note?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        Delete the note "{{note.title}}"?
+                        <br>You will not be able to recover this note once you delete it.
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="onDeleteClicked()">Delete</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                <!-- Discard Changes Modal -->
+                <div class="modal fade" id="discardChangesModal" tabindex="-1" aria-labelledby="discardChangesModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="discardChangesModalLabel">Discard unsaved changes?</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                This note contains unsaved changes. Do you want to discard them?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onDiscardChangesClicked()">Discard changes</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onUpdateClicked()">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
             </form>
         </div>

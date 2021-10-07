@@ -30,18 +30,16 @@ export class NotesListComponent implements OnInit {
       } else {
         this.isEmpty = true;
       }
-      console.log("Notes = "+this.notes[1].id);
+      //console.log("Notes = "+this.notes[1].id);
       console.log("Notes Length = "+this.notes.length);
     });
   }
 
   deleteNote(id: number, i: number){
-    if(confirm("Are you sure you want to delete the note \""+ this.notes[i].title +"\"?")){
-      this.noteService.deleteNote(id).subscribe(data => {
-        console.log("Note deleted. Data = "+data.toString());
-        this.getNotes();
-      });
-    }
+    this.noteService.deleteNote(id).subscribe(data => {
+      console.log("Note deleted. Data = "+data.toString());
+      this.getNotes();
+    });
   }
 
   editNote(id: number){

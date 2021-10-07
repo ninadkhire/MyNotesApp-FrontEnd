@@ -4,10 +4,6 @@ import { Observable } from 'rxjs';
 
 const AUTH_API = 'http://localhost:8088/api/auth/';
 
-const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
-};
-
 @Injectable({
   providedIn: 'root'
 })
@@ -16,17 +12,36 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(username: string, password: string): Observable<any>{
-    return this.http.post(AUTH_API+'signin', {
+    //Traditional method: sending credentials as parameters
+    /*return this.http.post(AUTH_API+'signin', {
       username,
       password
-    }, httpOptions);
+    }, httpOptions);*/
+
+    //New method: Sending credentials in Authorization header
+    const httpOptions = {
+      headers: new HttpHeaders({Authorization: 'Basic' + btoa(username+':'+password)})
+        .append('Content-Type', 'application/json')
+    };
+    return this.http.post(AUTH_API+'signin', {}, httpOptions);
   }
 
   register(username: string, email: string, password: string): Observable<any>{
-    return this.http.post(AUTH_API+'signup', {
+    //Traditional method: sending credentials as parameters
+    /*return this.http.post(AUTH_API+'signup', {
       username,
       email,
       password
-    }, httpOptions);
+    }, httpOptions);*/
+    
+    //New method: Sending credentials in Authorization header
+    const httpOptions = {
+      headers: new HttpHeaders({Authorization: 'Basic' + btoa(username+':'+email+':'+password)})
+        .append('Content-Type', 'application/json')
+    };
+
+    console.log("Register "+username);
+
+    return this.http.post(AUTH_API+'signup', {}, httpOptions);
   }
 }

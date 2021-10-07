@@ -4,7 +4,15 @@
             <div class="text-center">
                 <h3 class="mt-2">Create New Note</h3>
             </div>
-            <form (ngSubmit)="onSubmit()">
+
+            <div
+                class="alert alert-danger text-center"
+                role="alert"
+                *ngIf="showCantDeactivateAlert">
+                Please save or discard the changes.
+            </div>
+
+            <form>
         
                 <div class="form-group mt-2">
                     <label for="title">Title</label>
@@ -25,7 +33,34 @@
                         [(ngModel)]="note.note"></textarea>
                 </div>
         
-                <button id="positiveSubmitButton" class="btn btn-success mt-3" type="submit">Create</button>
+                <button
+                    id="positiveSubmitButton"
+                    class="btn btn-success mt-2 me-2"
+                    (click)="saveNote()">Save</button>
+
+                <button
+                    class="btn btn-secondary mt-2 me-2"
+                    data-bs-toggle="modal"
+                    data-bs-target="#discardChangesModal">Discard note</button>
+
+                <!-- Discard Changes Modal -->
+                <div class="modal fade" id="discardChangesModal" tabindex="-1" aria-labelledby="discardChangesModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="discardChangesModalLabel">This note is not yet saved</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Please select whether you want to save or discard this note.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="discardNote()">Discard</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="saveNote()">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         
             </form>
         </div>

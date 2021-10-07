@@ -56,7 +56,11 @@
 						<div *ngIf="password.errors.minlength">>> must be at least 5 characters</div>
 					</div>
 				</div>
-				<button id="positiveSubmitButton" type="submit" class="btn btn-primary mt-2">Login</button>
+				<button
+					id="positiveSubmitButton"
+					type="submit"
+					class="btn btn-primary mt-2"
+					[disabled]="!f.form.valid">Login</button>
 				<p class="mt-2">
 					<span class="btn-inline-text">Don't have an account?</span>
 					<button

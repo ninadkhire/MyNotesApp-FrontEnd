@@ -6,6 +6,14 @@
                 <h5 class="text-muted">Create a new account</h5>
             </div>
 
+            <div class="alert alert-success text-center" *ngIf="isSuccessful">
+                <p class="btn-inline-text">Your account has been created.<br>Please log in to continue.</p>
+                <button
+                            id="loginInsteadButton"
+                            class="btn btn-primary ms-2 "
+                            (click)="loginClicked()">Login</button>
+            </div>
+
             <form
                 *ngIf="!isSuccessful"
                 name="form"
@@ -70,23 +78,14 @@
                     </div>
                 </div>
 
-                <div class="form-group mt-2" hidden>
-                    <label for="password">Retype Password</label>
-                    <input
-                        type="password"
-                        class="form-control"
-                        id="password"
-                        name="password">
-                </div>
-
                 <div class="form-group mt-2">
                     <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
                         Signup failed!<br />{{ errorMessage }}
-                      </div>
+                    </div>
                     <button
                         id="signupButton"
                         class="btn btn-success"
-                        (click)="signupClicked()">Signup</button>
+                        [disabled]="f.form.invalid">Signup</button>
                     <p class="mt-2">
                         <span class="btn-inline-text">Already have an account?</span>
                         <button
